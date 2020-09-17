@@ -9,6 +9,12 @@ export class TodoItem extends Component {
             textDecoration: this.props.todo.completed ? "line-through" : "none"
         }
     }
+
+    //experiment: 
+    onChange = () => {
+       return this.props.markComplete(this.props.todo.id);
+    }
+    
     
     render() {
         const { id, title } = this.props.todo;
@@ -16,8 +22,8 @@ export class TodoItem extends Component {
         return (
             <div style={this.getStyle()}>
                 <p>
-                    <input type="checkbox"  onChange={this.props.markComplete.bind(this,id)} /> {" "}
-                    { title }
+                    <input type="checkbox"  onChange={this.onChange} /> {" "}
+                    { title } 
                     <button style={btnStyle} onClick={this.props.delTodo.bind(this, id)}>x</button>
                 </p>
             </div>
@@ -27,7 +33,9 @@ export class TodoItem extends Component {
 
 //PropTypes:
 TodoItem.propTypes = {
-    todo: PropTypes.object.isRequired
+    todo: PropTypes.object.isRequired,
+    markComplete: PropTypes.func.isRequired,
+    delTodo: PropTypes.func.isRequired
 }
 
 const btnStyle = {
