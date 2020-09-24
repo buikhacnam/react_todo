@@ -4,6 +4,7 @@ import Header from "./components/layout/Header"
 import AddTodo from './components/AddTodo';
 import Todos from './components/Todos';
 import About from "./components/pages/About";  
+import Footer from "./components/layout/Footer"
 import {v4 as uuid} from "uuid";
 import './App.css';
 
@@ -14,17 +15,20 @@ class App extends Component {
       {
         id: uuid(),
         title: "smoke some weed",
-        completed: false
+        completed: false,
+        changeColor:false
       },
       {
         id: uuid(),
         title: "fuck that chick",
-        completed: false
+        completed: false,
+        changeColor:false
       },
       {
         id: uuid(),
         title: "finish that whiskey bottle",
-        completed: false
+        completed: false,
+        changeColor:false
       }
     ]
   }
@@ -56,6 +60,15 @@ class App extends Component {
     this.setState({ todos: [...this.state.todos, newTodo] });
 
   }
+
+  changeColor = (id) => {
+    this.setState({todos: this.state.todos.map(todo => {
+      if(todo.id === id){
+        todo.changeColor = !todo.changeColor;
+      }
+      return todo;
+    })})
+  }
   render() {
     return (
       <Router>
@@ -65,12 +78,12 @@ class App extends Component {
             <Route exact path="/" render={props => (
               <React.Fragment>
                 <AddTodo addTodo={this.addTodo}/>
-                <Todos todos={this.state.todos} markComplete={this.markComplete} delTodo={this.delTodo}/>
+                <Todos todos={this.state.todos} markComplete={this.markComplete} delTodo={this.delTodo} changeColor={this.changeColor}/>
               </React.Fragment>
             )} />
 
             <Route path="/about" component={About} />
-            
+            <Footer />
           </div>
         </div>
       </Router>

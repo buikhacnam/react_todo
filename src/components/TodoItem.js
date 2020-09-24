@@ -1,9 +1,10 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
 import PropTypes from "prop-types";
+
 export class TodoItem extends Component {
     getStyle = () => {
         return {
-            background: "#f4f4f4",
+            background: this.props.todo.changeColor ? "red" : "#f4f4f4",
             padding: "10px",
             borderBottom: "1px #ccc dotted",
             textDecoration: this.props.todo.completed ? "line-through" : "none"
@@ -14,7 +15,12 @@ export class TodoItem extends Component {
     onChange = () => {
        return this.props.markComplete(this.props.todo.id);
     }
+
+    changeColor = () => {
+        return this.props.changeColor(this.props.todo.id);
+    }
     
+   
     
     render() {
         const { id, title } = this.props.todo;
@@ -23,8 +29,10 @@ export class TodoItem extends Component {
             <div style={this.getStyle()}>
                 <p>
                     <input type="checkbox"  onChange={this.onChange} /> {" "}
+                    <button style={btnStyle} onClick={this.changeColor}>Color</button>
                     { title } 
                     <button style={btnStyle} onClick={this.props.delTodo.bind(this, id)}>x</button>
+                    
                 </p>
             </div>
         )
